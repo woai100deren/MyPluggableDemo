@@ -1,0 +1,4 @@
+include ':plugin1'
+include ':pluginCoreLib'
+include ':app'
+rootProject.name = "MyPluggableDemo"
