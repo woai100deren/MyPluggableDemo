@@ -5,14 +5,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 
 import com.dj.plugin.plugincorelib.instrumentation.InstrumentationProxy;
 import com.dj.plugin.plugincorelib.mock.MockActivityManagerClass;
 import com.dj.plugin.plugincorelib.mock.MockActivityThreadClass;
 import com.dj.plugin.plugincorelib.utils.RefInvokeUtils;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 
 public class PluginAMSHookManager {

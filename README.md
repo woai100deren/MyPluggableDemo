@@ -1,0 +1,9 @@
+### 本例子实现的插件化功能如下
+
+- 插件apk可以修改resources资源前缀，比如0x71
+- 宿主apk合并了插件和宿主的resources，自定义Instrumentation，通过反射，将Activity中的resources替换为合并的resources。源码中getResources会先判断resources是否为null
+- 本例子并没有合并插件的classes到宿主中，是通过自定义dexClassLoader，新建LoadedApk，将自定义的classLoader设置进去，然后将新LoadedApk设置到了ActivityThread中的mPackages，这样在加载插件时，插件会找到新classLoader进行加载class
+- 为了完成第3步，还需要动态代理ActivityThread的IPackageManager接口，劫持getPackageInfo方法，防止系统在判断插件apk是否安装时返回null
+- 对AMS的IActivityTaskManager（系统版本不同，这里也不同）接口进行动态代理，劫持startActivity方法。在此处，就需要把要跳转到插件的intent替换为主工程的占位activity，然后把这intent当做参数，存储到占位activity的intent中。（此处也可以劫持startService，道理一样）
+- 对AMS的H（handler）的mCallback进行动态代理，拦截对应的消息返回，然后把第5步中的intent还原回来，这样就可以启动插件的activity了（service也类似）。
+
