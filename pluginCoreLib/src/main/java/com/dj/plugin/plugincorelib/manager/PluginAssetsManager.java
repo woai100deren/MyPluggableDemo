@@ -104,13 +104,17 @@ public class PluginAssetsManager {
         ZipUtils.unzipFile(getFileStreamPath(context,sourceName),unZipPath);
         Log.e("dj",">>>>>>>>>>>>>>>>当前手机cpu指令集："+Build.CPU_ABI);
         List<File> files;
-        String soPath;
+        String soPath ;
         if("arm64-v8a".equals(Build.CPU_ABI)){
             soPath = unZipPath+File.separator+"lib"+File.separator+"arm64-v8a";
         }else if("armeabi-v7a".equals(Build.CPU_ABI)){
             soPath = unZipPath+File.separator+"lib"+File.separator+"armeabi-v7a";
+        }else if("armeabi".equals(Build.CPU_ABI)){
+            soPath = unZipPath+File.separator+"lib"+File.separator+"armeabi";
+        }else if("x86".equals(Build.CPU_ABI)){
+            soPath = unZipPath+File.separator+"lib"+File.separator+"x86";
         }else{
-            soPath = unZipPath+File.separator+"lib"+File.separator+"arm64-v8a";
+            soPath = unZipPath+File.separator+"lib"+File.separator+"x86_64";
         }
         files = FileUtils.listFilesInDir(soPath);
         ApplicationInfo applicationInfo = PluginLoadedApkClassLoaderHookManager.generateApplicationInfo(getFileStreamPathFile(context,sourceName));
